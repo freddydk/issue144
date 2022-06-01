@@ -1,13 +1,22 @@
-## Preview
+﻿## Preview
 
 ### Issues
 - Issue #100 - Add more resilience to localDevEnv.ps1 and cloudDevEnv.ps1
+- Issue #131 - Special characters are not allowed in secrets
 
 ### All workflows
 - During initialize, all AL-Go settings files are now checked for validity and reported correctly
+- During initialize, the version number of AL-Go for GitHub is printed in large letters (incl. preview or dev.)
+
+### New workflow: Create new Performance Test App
+- Create BCPT Test app and add to bcptTestFolders to run bcpt Tests in workflows (set doNotRunBcptTests in workflow settings for workflows where you do NOT want this)
+
+### Update AL-Go System Files Workflow
+- Include release notes of new version in the description of the PR (and in the workflow output)
 
 ### CI/CD workflow
 - Apps are not signed when the workflow is running as a Pull Request validation
+- if a secret called applicationInsightsConnectionString exists, then the value of that will be used as ApplicationInsightsConnectionString for the app
 
 ### Increment Version Number Workflow
 - Bugfix: increment all apps using f.ex. +0.1 would fail.
@@ -34,7 +43,7 @@
         }
     ]
 ```
-- Default **BcContainerHelperVersion** is now based on templateUrl - preview AL-Go selects preview bcContainerHelper
+- Default **BcContainerHelperVersion** is now based on AL-Go version. Preview AL-Go selects preview bcContainerHelper, normal selects latest.
 - New Setting: **bcptTestFolders** contains folders with BCPT tests, which will run in all build workflows
 - New Setting: set **doNotRunBcptTest** to true (in workflow specific settings file?) to avoid running BCPT tests
 - New Setting: set **obsoleteTagMinAllowedMajorMinor** to enable appsource cop to validate your app against future changes (AS0105). This setting will become auto-calculated in Test Current, Test Next Minor and Test Next Major later.
@@ -44,7 +53,7 @@
 ### All workflows
 - Add requested permissions to avoid dependency on user/org defaults being too permissive
 
-### Check For Updates Workflow
+### Update AL-Go System Files Workflow
 - Default host to https://github.com/ (you can enter **myaccount/AL-Go-PTE@main** to change template)
 - Support for "just" changing branch (ex. **\@Preview**) to shift to the preview version
 
